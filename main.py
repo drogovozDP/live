@@ -1,7 +1,7 @@
 import pygame
 from Live import Live
 
-WIDTH, HEIGHT, FPS = 800, 600, 10
+WIDTH, HEIGHT, FPS = 0, 0, 10
 pygame.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 clock = pygame.time.Clock()

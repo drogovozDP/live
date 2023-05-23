@@ -11,3 +11,4 @@ The game will start in the initial `epoch` with the three alive cells. You can u
 * `down arrow` - Slows down `epoch` transition.
 * `left mouse click` - Makes the cell alive.
 * `right mouse click` - Makes the cell dead.
+* `escape` - Close the program.
