@@ -3,11 +3,10 @@ import pygame
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
+
 class Live:
     def __init__(self, size, screen):
         self.size = size
-        # self.const_W = pygame.display.Info().current_w / width
-        # self.const_H = pygame.display.Info().current_h / height
         self.world = self.create()
         self.screen = screen
         self.begin()
@@ -26,31 +25,28 @@ class Live:
             live.append(row)
         return live
 
-    def next_age(self):
+    def next_age(self, clock, FPS):
+        clock.tick(FPS)
         new_world = self.create()
         for i in range(len(self.world)):
             for j in range(len(self.world[i])):
                 lives = 0
                 left = i - 1
-                right = i + 1
+                right = i + 1 if i + 1 < len(self.world) else 0
                 top = j - 1
-                bottom = j + 1
-                if right == len(self.world):
-                    right = 0
-                if bottom == len(self.world[i]):
-                    bottom = 0
+                bottom = j + 1 if j + 1 < len(self.world[i]) else 0
 
-                if self.world[left][top]: lives += 1 # top-left
-                if self.world[i][top]: lives += 1 # top
-                if self.world[right][top]: lives += 1 # top-right
-                if self.world[left][j]: lives += 1 # left
-                if self.world[right][j]: lives += 1 # right
-                if self.world[left][bottom]: lives += 1 # bottom-left
-                if self.world[i][bottom]: lives += 1 # bottom
-                if self.world[right][bottom]: lives += 1 # bottom-right
+                lives += 1 if self.world[left][top] else 0  # top-left
+                lives += 1 if self.world[i][top] else 0  # top
+                lives += 1 if self.world[right][top] else 0  # top-right
+                lives += 1 if self.world[left][j] else 0  # left
+                lives += 1 if self.world[right][j] else 0  # right
+                lives += 1 if self.world[left][bottom] else 0  # bottom-left
+                lives += 1 if self.world[i][bottom] else 0  # bottom
+                lives += 1 if self.world[right][bottom] else 0  # bottom-right
 
                 if self.world[i][j]:
-                    if lives == 2 or lives == 3:
+                    if 2 <= lives <= 3:
                         new_world[i][j] = True
                     else:
                         new_world[i][j] = False
@@ -63,16 +59,10 @@ class Live:
     def set_live(self, pos, judgment):
         x = pos[0] // self.size
         y = pos[1] // self.size
-        if judgment == 1:
-            self.world[x][y] = True
-        else:
-            self.world[x][y] = False
+        self.world[x][y] = 1 if judgment == 1 else 0
 
     def draw(self):
-        for i in range(len(self.world)):
-            for j in range(len(self.world[i])):
-                if self.world[i][j] == True:
-                    color = WHITE
-                else:
-                    color = BLACK
+        for i in range(1, len(self.world) - 1):
+            for j in range(1, len(self.world[i]) - 1):
+                color = WHITE if self.world[i][j] else BLACK
                 pygame.draw.rect(self.screen, color, (i * self.size, j * self.size, self.size, self.size))
