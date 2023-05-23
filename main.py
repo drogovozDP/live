@@ -38,7 +38,11 @@ while run:
                 FPS += 10 if FPS + 10 < 130 else 0
 
             if event.key == pygame.K_DOWN:
-                FPS -= 10 if FPS - 10 > 50 else 0
+                FPS -= 10 if FPS - 10 > 9 else 0
+
+            if event.key == pygame.K_BACKSPACE:
+                live.reset()
+                next = False
 
             if event.key == pygame.K_ESCAPE:
                 run = False

@@ -5,11 +5,16 @@ WHITE = (255, 255, 255)
 
 
 class Live:
+    world = None
+
     def __init__(self, size, screen):
         self.size = size
-        self.world = self.create()
+        self.reset()
         self.screen = screen
         self.begin()
+
+    def reset(self):
+        self.world = self.create()
 
     def begin(self):
         self.world[3][2] = True
