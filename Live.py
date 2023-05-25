@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -10,6 +11,7 @@ class Live:
     def __init__(self, size, screen):
         self.size = size
         self.reset()
+        self.step_world = np.zeros(self.world.shape)
         self.screen = screen
         self.begin()
 
@@ -22,17 +24,13 @@ class Live:
         self.world[3][4] = True
 
     def create(self):
-        live = []
         width = pygame.display.Info().current_w
         height = pygame.display.Info().current_h
-        for i in range(width // self.size):
-            row = [False] * (height // self.size)
-            live.append(row)
-        return live
+        return np.zeros((width // self.size, height // self.size))
 
     def next_age(self, clock, FPS):
         clock.tick(FPS)
-        new_world = self.create()
+        self.step_world *= 0
         for i in range(len(self.world)):
             for j in range(len(self.world[i])):
                 lives = 0
@@ -51,20 +49,16 @@ class Live:
                 lives += 1 if self.world[right][bottom] else 0  # bottom-right
 
                 if self.world[i][j]:
-                    if 2 <= lives <= 3:
-                        new_world[i][j] = True
-                    else:
-                        new_world[i][j] = False
+                    self.step_world[i, j] = 1 if 2 <= lives <= 3 else 0
                 else:
-                    if lives == 3:
-                        new_world[i][j] = True
-        del self.world
-        self.world = new_world
+                    self.step_world[i, j] = 1 if lives == 3 else 0
+
+        self.world = self.world * 0 + self.step_world
 
     def set_live(self, pos, judgment):
         x = pos[0] // self.size
         y = pos[1] // self.size
-        self.world[x][y] = 1 if judgment == 1 else 0
+        self.world[x, y] = 1 if judgment == 1 else 0
 
     def draw(self):
         for i in range(1, len(self.world) - 1):
