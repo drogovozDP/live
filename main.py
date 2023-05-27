@@ -1,5 +1,5 @@
 import pygame
-from Live import Live
+from live import Live
 
 WIDTH, HEIGHT, FPS = 0, 0, 10
 pygame.init()
@@ -33,12 +33,20 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 next = not next
+                if next:
+                    live.save_age()
 
             if event.key == pygame.K_UP:
                 FPS += 10 if FPS + 10 < 130 else 0
 
             if event.key == pygame.K_DOWN:
                 FPS -= 10 if FPS - 10 > 9 else 0
+
+            if event.key == pygame.K_z and pygame.key.get_mods() and pygame.KMOD_CTRL:
+                live.set_age(-1)
+
+            if event.key == pygame.K_y and pygame.key.get_mods() and pygame.KMOD_CTRL:
+                live.set_age(1)
 
             if event.key == pygame.K_BACKSPACE:
                 live.reset()
