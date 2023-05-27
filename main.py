@@ -42,10 +42,10 @@ while run:
             if event.key == pygame.K_DOWN:
                 FPS -= 10 if FPS - 10 > 9 else 0
 
-            if event.key == pygame.K_z and pygame.key.get_mods() and pygame.KMOD_CTRL:
+            if event.key == pygame.K_z and pygame.key.get_mods() and pygame.KMOD_CTRL and not next:
                 live.set_age(-1)
 
-            if event.key == pygame.K_y and pygame.key.get_mods() and pygame.KMOD_CTRL:
+            if event.key == pygame.K_y and pygame.key.get_mods() and pygame.KMOD_CTRL and not next:
                 live.set_age(1)
 
             if event.key == pygame.K_BACKSPACE:
