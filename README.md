@@ -5,10 +5,12 @@
 
 ## How to use
 The game will start in the initial `epoch` with the three alive cells. You can use the following buttons:
-* `space` - Starts and stops `epoch` transition.
-* `backspace` - Makes all cells dead.
-* `up arrow` - Speeds up `epoch` transition.
-* `down arrow` - Slows down `epoch` transition.
-* `left mouse click` - Makes the cell alive.
-* `right mouse click` - Makes the cell dead.
-* `escape` - Closes the program.
+* `SPACE` - Starts and stops `epoch` transition.
+* `BACKSPACE` - Makes all cells dead.
+* `UP arrow` - Speeds up `epoch` transition.
+* `DOWN arrow` - Slows down `epoch` transition.
+* `LEFT mouse click` - Makes the cell alive.
+* `RIGHT mouse click` - Makes the cell dead.
+* `CTRL` + `Z`- back to the previous age.
+* `CTRL` + `Y` - move to the next age.
+* `ESC` - Closes the program.
