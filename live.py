@@ -6,6 +6,7 @@ import numpy as np
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+GREED_COLOR = (50, 50, 50)
 MAX_SAVED_AGES_LEN = 20
 
 
@@ -19,6 +20,7 @@ class Live:
         self.reset()
         self.step_world = np.zeros(self.world.shape)
         self.screen = screen
+        self.grid = []
         self._begin()
         self.save_age()
 
@@ -26,9 +28,16 @@ class Live:
         self.world = self._create()
 
     def _begin(self):
-        self.world[3][2] = True
-        self.world[3][3] = True
-        self.world[3][4] = True
+        width = pygame.display.Info().current_w
+        height = pygame.display.Info().current_h
+
+        for i in range(0, len(self.world) - 1, 2):
+            for x, y in zip([i, i, i + 1, i + 1, i + 2], [0, height, height, 0, 0]):
+                self.grid.append([self.size * x, y])
+
+        for i in range(0, len(self.world[0]) - 1, 2):
+            for x, y in zip([0, width, width, 0, 0], [i, i, i + 1, i + 1, i + 2]):
+                self.grid.append([x, self.size * y])
 
     def _create(self):
         width = pygame.display.Info().current_w
@@ -86,3 +95,13 @@ class Live:
             for j in range(1, len(self.world[i]) - 1):
                 color = WHITE if self.world[i, j] else BLACK
                 pygame.draw.rect(self.screen, color, (i * self.size, j * self.size, self.size, self.size))
+
+        pygame.draw.lines(self.screen, GREED_COLOR, False, self.grid)
+        # pygame.draw.lines(
+        #     self.screen,
+        #     (255, 0, 144),
+        #     False,
+        #     [
+        #
+        #     ]
+        # )
